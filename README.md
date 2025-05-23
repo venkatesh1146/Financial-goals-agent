@@ -223,3 +223,86 @@ No, I don't have any more assets to add.
 - [Sequential Agents in ADK](https://google.github.io/adk-docs/agents/workflow-agents/sequential-agents/)
 - [LiteLLM Integration in ADK](https://google.github.io/adk-docs/tutorials/agent-team/#step-2-going-multi-model-with-litellm-optional)
 - [Azure OpenAI Documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/)
+
+## Financial Risk Assessor API
+
+This project provides a REST API for accessing the Financial Risk Assessor agent functionality.
+
+### Setup
+
+1. Install required dependencies:
+```bash
+pip install -r ../requirements.txt
+```
+
+2. Run the API server:
+```bash
+python run_api.py
+```
+
+3. The API documentation will be available at http://localhost:8000/docs
+
+### API Endpoints
+
+#### POST /assess
+Submit a financial risk assessment query.
+
+**Request Body:**
+```json
+{
+  "user_id": "string",
+  "query": "string"
+}
+```
+
+**Response:**
+```json
+{
+  "session_id": "string",
+  "response": "string",
+  "risk_score": "number or null"
+}
+```
+
+#### GET /session/{session_id}
+Retrieve the state for a specific session.
+
+**Query Parameters:**
+- `user_id`: string (required)
+
+**Response:** Complete session state including interaction history, risk assessments, and current analysis.
+
+#### GET /health
+Health check endpoint.
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "service": "Financial Risk Assessor API"
+}
+```
+
+### Usage Example
+
+```python
+import requests
+
+# Make a risk assessment request
+response = requests.post(
+    "http://localhost:8000/assess",
+    json={
+        "user_id": "user-123",
+        "query": "Assess the risk of investing in a tech startup with negative cash flow but strong user growth"
+    }
+)
+
+result = response.json()
+print(f"Response: {result['response']}")
+print(f"Risk score: {result['risk_score']}")
+
+# Get session details
+session_id = result['session_id']
+session = requests.get(f"http://localhost:8000/session/{session_id}", params={"user_id": "user-123"}).json()
+print(f"Session state: {session}")
+```

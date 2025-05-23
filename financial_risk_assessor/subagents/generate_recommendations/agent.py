@@ -5,7 +5,7 @@ This agent generates personalized investment recommendations based on the user's
 risk profile, financial goals, and portfolio analysis.
 """
 
-from google.adk.agents import LlmAgent, ParallelAgent
+from google.adk.agents import LlmAgent, SequentialAgent
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.models.lite_llm import LiteLlm
 from google.genai import types
@@ -165,14 +165,14 @@ risk_report_agent = LlmAgent(
     output_key="risk_report_result",
 )
 
-# Create the parallel recommendations agent
-generate_recommendations_agent = ParallelAgent(
+# Create the sequential recommendations agent (changed from parallel)
+generate_recommendations_agent = SequentialAgent(
     name="GenerateRecommendations",
     sub_agents=[
         asset_allocation_agent,
         investment_products_agent,
         risk_report_agent
     ],
-    description="Generates personalized investment recommendations and risk report",
+    description="Generates personalized investment recommendations and risk report in sequential order",
     before_agent_callback=check_risk_assessment_complete,
 )

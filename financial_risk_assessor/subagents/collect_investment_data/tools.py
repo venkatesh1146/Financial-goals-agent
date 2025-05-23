@@ -104,6 +104,8 @@ def record_asset_details(
     if "investments" not in tool_context.state:
         tool_context.state["investments"] = []
     
+    # Store asset_type value before appending to investments to avoid KeyError
+    asset_type = current_investment.get('asset_type', 'Unspecified')
     tool_context.state["investments"].append(current_investment)
     
     # Clear the current investment data so a new one can be started
@@ -111,7 +113,7 @@ def record_asset_details(
     
     return {
         "status": "success",
-        "message": f"Details for {name} ({current_investment['asset_type']}) recorded successfully.",
+        "message": f"Details for {name} ({asset_type}) recorded successfully.",
         "details": current_investment,
     }
 
