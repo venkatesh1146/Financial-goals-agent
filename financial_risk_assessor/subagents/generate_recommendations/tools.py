@@ -156,7 +156,7 @@ def suggest_investment_products(
             ],
             "Aggressive": [
                 {"name": "High-yield Corporate Bonds", "description": "Higher yields with higher default risk"},
-                {"name": "Emerging Market Bonds", "description": "Higher potential returns with currency and political risk"},
+                {"name": "Emerging Market Bonds", "description": "Higher potential returns with currency and political risk (in INR)"},
                 {"name": "Convertible Bonds", "description": "Potential equity upside with some downside protection"}
             ]
         },
