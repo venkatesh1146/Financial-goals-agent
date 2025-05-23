@@ -1,0 +1,35 @@
+.venv/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.test
+.env.production
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore environment files
+.env
+
+# Ignore Cython build files
+*.c
+*.so
+*.pyd
+*.pyc
+build/
+
+# Ignore Python compiled files for specific versions
+*.cpython-311.*
+*.cpython-313.*
+
+
+
+
+
+

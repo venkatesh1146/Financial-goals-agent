@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 from financial_risk_assessor.agent import root_agent
@@ -11,7 +12,30 @@ import logging
 # Set up logger
 logger = logging.getLogger("financial_risk_assessor.api")
 
-app = FastAPI()
+app = FastAPI(
+    title="Financial Risk Assessor API",
+    description="API for comprehensive financial risk assessment and investment recommendations",
+    version="1.0.0"
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",  # Next.js default development server
+        "http://localhost:3001",  # Alternative Next.js port
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
+        "https://localhost:3000",  # HTTPS variants
+        "https://localhost:3001",
+        # Add your production domains here when deploying
+        # "https://yourdomain.com",
+        # "https://www.yourdomain.com"
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 # Initialize session service
 session_service = InMemorySessionService()
@@ -32,6 +56,29 @@ class UserProfile(BaseModel):
     goals: str
     risk_appetite: str
     investments: List[Investment]
+
+@app.get("/")
+async def root():
+    """Root endpoint with API information"""
+    return {
+        "message": "Financial Risk Assessor API",
+        "version": "1.0.0",
+        "status": "active",
+        "endpoints": {
+            "analyze": "/analyze (POST)",
+            "health": "/health (GET)",
+            "docs": "/docs"
+        }
+    }
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for frontend verification"""
+    return {
+        "status": "healthy",
+        "message": "Financial Risk Assessor API is running",
+        "cors_enabled": True
+    }
 
 @app.post("/analyze")
 async def analyze_risk(profile: UserProfile):
@@ -116,6 +163,7 @@ async def analyze_risk(profile: UserProfile):
     response = {
         "risk_assessment": risk_report.get("risk_assessment", {}),
         "portfolio_analysis": risk_report.get("portfolio_analysis", {}),
+        "comprehensive_recommendations": risk_report.get("comprehensive_recommendations", {}),
         "recommendations": risk_report.get("recommendations", {}),
         "next_steps": risk_report.get("next_steps", []),
         "age_specific_advice": risk_report.get("age_specific_advice", "")

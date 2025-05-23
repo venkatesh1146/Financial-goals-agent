@@ -15,7 +15,9 @@ if __name__ == "__main__":
     
     # Start the FastAPI server
     print(f"Starting Financial Risk Assessor API on port {port}...")
-    print("API documentation will be available at http://localhost:{port}/docs")
+    print(f"API documentation will be available at http://localhost:{port}/docs")
+    print("✨ New: Comprehensive investment recommendations based on risk profile, time horizon, and lumpsum availability")
+    print("🌐 CORS enabled for Next.js development (ports 3000, 3001)")
     
     uvicorn.run(
         "financial_risk_assessor.api:app",

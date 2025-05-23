@@ -11,7 +11,7 @@ from google.adk.models.lite_llm import LiteLlm
 from google.genai import types
 from typing import Optional
 
-from .tools import suggest_asset_allocation, suggest_investment_products, generate_risk_report
+from .tools import suggest_asset_allocation, suggest_investment_products, generate_risk_report, get_comprehensive_investment_recommendations
 
 # Define a callback to check if risk assessment is complete
 def check_risk_assessment_complete(callback_context: CallbackContext) -> Optional[types.Content]:
@@ -92,36 +92,45 @@ asset_allocation_agent = LlmAgent(
 investment_products_agent = LlmAgent(
     name="InvestmentProductRecommender",
     model=LiteLlm(model="azure/gpt-4.1"),
-    instruction="""You are an Investment Product Specialist.
+    instruction="""You are an Investment Product Specialist using a comprehensive decision matrix.
 
     Your task is to recommend specific investment products based on the user's
-    risk profile and the suggested asset allocation.
+    risk profile, time horizon, and lumpsum availability using our decision matrix.
     
     ## PROCESS
     
-    1. Examine the user's risk profile and suggested asset allocation from session state
-    2. Use the suggest_investment_products tool to generate appropriate product recommendations
-    3. Tailor your explanations to the user's financial sophistication level
+    1. Use the get_comprehensive_investment_recommendations tool to generate precise 
+       recommendations based on the decision matrix
+    2. The tool considers risk profile, time horizon, and lumpsum availability
+    3. Present the recommendations clearly with allocations and rationale
+    4. Include specific fund names with historical returns when available
     
-    ## RECOMMENDATIONS
+    ## DECISION MATRIX FACTORS
     
-    Include diverse product types based on the user's risk profile:
+    - Risk Profile: Conservative, Moderate, or Aggressive
+    - Time Horizon: <3 Years, 3-7 Years, or 7+ Years (determined from goals and age)
+    - Lumpsum Availability: Based on savings after emergency fund
     
-    - Conservative investors: Focus on index funds, blue-chip stocks, government bonds, etc.
-    - Moderate investors: Balanced funds, growth ETFs, corporate bonds, etc.
-    - Aggressive investors: Small-cap funds, sector ETFs, international investments, etc.
+    ## FUND RECOMMENDATIONS
+    
+    When presenting specific fund categories, include:
+    - Specific fund names (e.g., "HDFC Balanced Advantage Fund")
+    - Historical returns where available (e.g., "8.50% historical returns")
+    - Brief description of fund characteristics
     
     ## COMMUNICATION STYLE
     
-    - Be informative but concise
-    - Explain why each product category is appropriate for the user
-    - Provide enough detail for the user to understand the recommendation
-    - Don't overwhelm with too many options
+    - Start with the primary investment strategy
+    - Present specific product recommendations with allocations
+    - Include specific fund examples with returns when available
+    - Include suggested SIP and lumpsum amounts
+    - Explain the rationale for the strategy
+    - Be clear about the time horizon and why it matters
     
-    Use the suggest_investment_products tool to generate tailored recommendations.
+    Use the get_comprehensive_investment_recommendations tool for accurate matrix-based recommendations.
     """,
-    tools=[suggest_investment_products],
-    description="Recommends specific investment products based on asset allocation",
+    tools=[get_comprehensive_investment_recommendations],
+    description="Recommends specific investment products using comprehensive decision matrix",
     output_key="investment_products_result",
 )
 
