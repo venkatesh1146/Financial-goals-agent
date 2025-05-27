@@ -1,3 +1,4 @@
+
 .venv/
 .env
 .env.local
@@ -7,6 +8,7 @@
 .env.development
 .env.test
 .env.production
+
 # Ignore Python cache files
 __pycache__/
 *.py[cod]
@@ -26,10 +28,7 @@ build/
 
 # Ignore Python compiled files for specific versions
 *.cpython-311.*
+
 *.cpython-313.*
-
-
-
-
 
 

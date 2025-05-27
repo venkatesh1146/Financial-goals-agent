@@ -53,7 +53,7 @@ collect_investment_data_agent = LlmAgent(
     After recording the asset type, collect the following information:
     
     Required fields:
-    - amount: Initial investment amount in dollars
+    - amount: Initial investment amount in INR
     - name: Name or description of the asset (e.g., "Apple Stock", "US Treasury Bonds", "Rental Property")
     
     Optional fields (collect if relevant for the asset type):

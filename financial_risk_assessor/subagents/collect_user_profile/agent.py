@@ -24,9 +24,9 @@ collect_user_profile_agent = SequentialAgent(
             ## DATA COLLECTION PROCESS
             1. Collect the following information from the user:
                - Age (in years)
-               - Annual income (in dollars)
-               - Monthly expenses (in dollars)
-               - Total savings (in dollars)
+               - Annual income (in INR)
+               - Monthly expenses (in INR)
+               - Total savings (in INR)
                - Financial goals (short description)
                - Risk appetite (self-described: conservative, moderate, or aggressive)
             

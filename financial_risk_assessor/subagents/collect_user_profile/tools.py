@@ -20,9 +20,9 @@ def collect_user_info(
     
     Args:
         age: User's age in years
-        annual_income: Annual income in dollars
-        monthly_expenses: Monthly expenses in dollars
-        total_savings: Total savings and investments in dollars
+        annual_income: Annual income in INR
+        monthly_expenses: Monthly expenses in INR
+        total_savings: Total savings and investments in INR
         financial_goals: Description of financial goals (e.g., retirement, house purchase)
         risk_appetite: Self-described risk tolerance (e.g., conservative, moderate, aggressive)
         tool_context: Tool context with access to state

@@ -67,10 +67,10 @@ def record_asset_details(
     Records detailed information about an asset or investment.
     
     Args:
-        amount: Initial investment amount in dollars
+        amount: Initial investment amount in INR
         name: Name or description of the asset/investment
         expected_returns: Expected annual returns as a percentage (optional)
-        current_value: Current value of the asset in dollars (optional)
+        current_value: Current value of the asset in INR (optional)
         purchase_date: When the asset was acquired (optional)
         tenure: How long the asset has been held or investment duration (optional)
         risk_category: User's assessment of the asset's risk (optional)
